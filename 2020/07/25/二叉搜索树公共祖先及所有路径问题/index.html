@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="ydl&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.jpg">
+  
+  <title>
+    
+      二叉搜索树公共祖先及所有路径问题 | Blog of Yindarling
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!-- <div class="logo"></div> -->
+      <span>Blog of Yindarling</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>二叉搜索树公共祖先及所有路径问题</h2>
+  <p class="post-date">2020-07-25</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>求二叉搜索树的公共祖先着实巧妙，利用二叉搜索树的性质十分简单；所有路径及左叶子之和都是在考DFS的应用，怎么考虑递归的条件，递归什么时候结束都得好好思考；其中第二题递归难点是参数，第三题递归难点是判断节点的结构。</p>
+<a id="more"></a>
+
+<h4 id="题目I"><a href="#题目I" class="headerlink" title="题目I"></a>题目I</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200713174127.png" width="70%" />
+
+<h4 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">TreeNode* <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode* root, TreeNode* p, TreeNode* q)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;val&lt;root-&gt;val <span class="keyword">and</span> q-&gt;val&lt;root-&gt;val)&#123;</span><br><span class="line">            <span class="keyword">return</span> lowestCommonAncestor(root-&gt;left,p,q);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;val&gt;root-&gt;val <span class="keyword">and</span> q-&gt;val&gt;root-&gt;val)&#123;</span><br><span class="line">            <span class="keyword">return</span> lowestCommonAncestor(root-&gt;right,p,q);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h4><p>这道题非常巧妙，利用到了二叉搜索树的性质，即右子树的值都比root节点的值大，左子树的值都比root节点的值小；<br>具体算法为：</p>
+<blockquote>
+<p>从根节点开始遍历树<br>如果节点 pp 和节点 qq 都在右子树上，那么以右孩子为根节点继续 1 的操作<br>如果节点 pp 和节点 qq 都在左子树上，那么以左孩子为根节点继续 1 的操作<br>如果条件 2 和条件 3 都不成立，这就意味着我们已经找到节 pp 和节点 qq 的 LCA 了</p>
+</blockquote>
+<p>所以实际操作时，只需要判断val即可</p>
+<h4 id="题目II"><a href="#题目II" class="headerlink" title="题目II"></a>题目II</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200713181640.png" width="70%">
+
+<h4 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; <span class="title">binaryTreePaths</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">       <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; result;</span><br><span class="line">       <span class="keyword">if</span>(root==<span class="literal">NULL</span>)&#123;</span><br><span class="line">           <span class="keyword">return</span> result;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="built_in">string</span> temp=<span class="string">""</span>;</span><br><span class="line">       help(root,temp,result);</span><br><span class="line">       <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; real;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;result.size();i++)&#123;</span><br><span class="line">           real.push_back(result[i].substr(<span class="number">2</span>));</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> real;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="built_in">string</span> <span class="title">help</span><span class="params">(TreeNode* p,<span class="built_in">string</span> temp,<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; &amp; result)</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(p-&gt;left==<span class="literal">NULL</span> <span class="keyword">and</span> p-&gt;right==<span class="literal">NULL</span>)&#123;</span><br><span class="line">           <span class="built_in">string</span> t=temp+<span class="string">"-&gt;"</span>+to_string(p-&gt;val);</span><br><span class="line">           result.push_back(t);</span><br><span class="line">           <span class="keyword">return</span> t;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;left==<span class="literal">NULL</span> <span class="keyword">and</span> p-&gt;right!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">           <span class="built_in">string</span> t=temp+<span class="string">"-&gt;"</span>+to_string(p-&gt;val);</span><br><span class="line">           help(p-&gt;right,t,result);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">else</span> <span class="keyword">if</span>(p-&gt;right==<span class="literal">NULL</span> <span class="keyword">and</span> p-&gt;left!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">           <span class="built_in">string</span> t=temp+<span class="string">"-&gt;"</span>+to_string(p-&gt;val);</span><br><span class="line">           help(p-&gt;left,t,result);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">else</span>&#123;</span><br><span class="line">           <span class="built_in">string</span> t=temp+<span class="string">"-&gt;"</span>+to_string(p-&gt;val);</span><br><span class="line">           help(p-&gt;left,t,result);</span><br><span class="line">           help(p-&gt;right,t,result);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟-1"><a href="#感悟-1" class="headerlink" title="感悟"></a>感悟</h4><p>因为是求根节点到叶节点的路径，自上而下所以想到的是深度遍历，也就是递归。利用了C++中的引用传递来对同一个vector改变值。每一次遍历到叶节点时，把结果放到最终的result里，如果当前节点不是子节点的话，根据当前节点的val更新从根节点到当前节点的路径，然后传参。<br>具体递归思路：<br>从根节点到叶节点的路径可以递归为，从根节点到左右子树的路径，左右子树又可以看作新的root节点及左右子树</p>
+<h4 id="题目III"><a href="#题目III" class="headerlink" title="题目III"></a>题目III</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200713184710.png" width="60%" />
+
+<h4 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sumOfLeftLeaves</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> result=<span class="number">0</span>;</span><br><span class="line">       traverse(root,result);</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">traverse</span><span class="params">(TreeNode* p,<span class="keyword">int</span> &amp; result)</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(p!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">           <span class="keyword">if</span>(p-&gt;left!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">               <span class="keyword">if</span>(p-&gt;left-&gt;left==<span class="literal">NULL</span> <span class="keyword">and</span> p-&gt;left-&gt;right==<span class="literal">NULL</span>)&#123;</span><br><span class="line">                   result+=p-&gt;left-&gt;val;</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">else</span>&#123;</span><br><span class="line">                   traverse(p-&gt;left,result);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span>(p-&gt;right!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">               traverse(p-&gt;right,result);</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟-2"><a href="#感悟-2" class="headerlink" title="感悟"></a>感悟</h4><p>这道题也是考DFS，但是不同的是，之前题目的遍历，都是只需要考虑遍历到的当前节点，而这道题目则需要判断当前节点的左子节点是不是叶节点，相当于又往下一层了，这个if else让我着实想了好一会儿。</p>
+</section>
+    <!-- Tags START -->
+    <!-- 
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#力扣" >
+    <span class="tag-code">力扣</span>
+  </a>
+
+      </div>
+     -->
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/07/25/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E4%B9%8B%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8CIII/">
+        <span class="nav-arrow">← </span>
+        
+          回溯算法之路径总和III
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/07/25/DFS%E5%BA%94%E7%94%A8%E4%B9%8B%E8%B7%AF%E5%BE%84%E4%B9%8B%E5%92%8C%E3%80%81%E4%BA%8C%E5%8F%89%E6%A0%91%E7%BF%BB%E8%BD%AC/">
+        
+          DFS应用之路径之和、二叉树翻转
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目I"><span class="toc-nav-text">题目I</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟"><span class="toc-nav-text">感悟</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目II"><span class="toc-nav-text">题目II</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解-1"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟-1"><span class="toc-nav-text">感悟</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目III"><span class="toc-nav-text">题目III</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解-2"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟-2"><span class="toc-nav-text">感悟</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2020/07/25/二叉搜索树公共祖先及所有路径问题/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <!-- <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div> -->
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2020 | Content by <a href="https://github.com/ydl8023" target="_blank">Yindarling</a> | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a> |
+    Theme by <a href="https://github.com/yanm1ng" target="_blank" rel="noopener">yanm1ng</a>
+
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

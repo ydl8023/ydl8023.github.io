@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="ydl&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.jpg">
+  
+  <title>
+    
+      dp之最大子序和、爬楼梯及二分插入 | Blog of Yindarling
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!-- <div class="logo"></div> -->
+      <span>Blog of Yindarling</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>dp之最大子序和、爬楼梯及二分插入</h2>
+  <p class="post-date">2020-07-25</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>第一题考了dp、贪心；第二题考了二分查找；第三题考了dp；dp确实麻烦，接下来几天都做做这类的题目</p>
+<a id="more"></a>
+
+<h4 id="题目I"><a href="#题目I" class="headerlink" title="题目I"></a>题目I</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200717111845.png" width="70%" />
+
+<h4 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 暴力解法，很悲催的是果然超出时间限制了</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">       <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=nums.size();i++)&#123;</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j+i&lt;=nums.size();j++)&#123;</span><br><span class="line">               <span class="keyword">int</span> t=<span class="number">0</span>;</span><br><span class="line">               <span class="keyword">for</span>(<span class="keyword">int</span> k=j;k&lt;=j+i<span class="number">-1</span>;k++)&#123;</span><br><span class="line">                   t+=nums[k];</span><br><span class="line">               &#125;</span><br><span class="line">               temp.push_back(t);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> *max_element(temp.begin(),temp.end());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 动态规划，遍历的方式和之前的不同</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">       <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dp;</span><br><span class="line">       dp.push_back(nums[<span class="number">0</span>]);</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;nums.size();i++)&#123;</span><br><span class="line">           <span class="keyword">if</span>(dp[i<span class="number">-1</span>]+nums[i]&gt;nums[i])&#123;</span><br><span class="line">               dp.push_back(dp[i<span class="number">-1</span>]+nums[i]);</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">else</span>&#123;</span><br><span class="line">               dp.push_back(nums[i]);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> *max_element(dp.begin(),dp.end());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 贪心算法</span></span><br><span class="line"><span class="comment">// 需要注意的是，result和sum的初始值不是nums[0]</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> result=INT_MIN;</span><br><span class="line">       <span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.size();i++)&#123;</span><br><span class="line">           sum+=nums[i];</span><br><span class="line">           <span class="keyword">if</span>(sum&gt;result)&#123;</span><br><span class="line">               result=sum;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span>(sum&lt;<span class="number">0</span>)&#123;</span><br><span class="line">               sum=<span class="number">0</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h4><p><a href="https://leetcode-cn.com/problems/maximum-subarray/solution/zui-da-zi-xu-he-cshi-xian-si-chong-jie-fa-bao-li-f/" target="_blank" rel="noopener">leetcode上的深度解析</a><br>动态规划：选取每个节点作为子串终节点时的最大值<br>贪心算法：在从左到右遍历的时候，每次都让结果尽可能大，当sum小于0时就重新选取字串，但result不变；result只在sum大于result时变为result</p>
+<h4 id="题目II"><a href="#题目II" class="headerlink" title="题目II"></a>题目II</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200717121831.png" width="70%" />
+
+<h4 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">searchInsert</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> ans=nums.size();</span><br><span class="line">       <span class="keyword">int</span> left=<span class="number">0</span>;</span><br><span class="line">       <span class="keyword">int</span> right=ans<span class="number">-1</span>;</span><br><span class="line">       <span class="keyword">while</span>(left&lt;=right)&#123;</span><br><span class="line">           <span class="keyword">int</span> mid=(right-left)/<span class="number">2</span>+left;</span><br><span class="line">           <span class="keyword">if</span>(nums[mid]&gt;=target)&#123;</span><br><span class="line">               ans=mid;</span><br><span class="line">               right=mid<span class="number">-1</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">else</span>&#123;</span><br><span class="line">               left=mid+<span class="number">1</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> ans;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟-1"><a href="#感悟-1" class="headerlink" title="感悟"></a>感悟</h4><p>二分查找的边界真的很麻烦呀，就把这个当作模板背下来好了</p>
+<h4 id="题目III"><a href="#题目III" class="headerlink" title="题目III"></a>题目III</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200717184441.png" width="70%" />
+
+<h4 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">climbStairs</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">       <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">vc</span><span class="params">(n+<span class="number">2</span>,<span class="number">0</span>)</span></span>;</span><br><span class="line">       vc[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">       vc[<span class="number">2</span>]=<span class="number">2</span>;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">3</span>;i&lt;=n;i++)&#123;</span><br><span class="line">           vc[i]=vc[i<span class="number">-1</span>]+vc[i<span class="number">-2</span>];</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> vc[n];</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟-2"><a href="#感悟-2" class="headerlink" title="感悟"></a>感悟</h4><p>典型的动态规划题，可以转化为斐波那契数列，具体参考<br><a href="https://labuladong.gitbook.io/algo/dong-tai-gui-hua-xi-lie/dong-tai-gui-hua-xiang-jie-jin-jie" target="_blank" rel="noopener">dp算法解析</a></p>
+</section>
+    <!-- Tags START -->
+    <!-- 
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#力扣" >
+    <span class="tag-code">力扣</span>
+  </a>
+
+      </div>
+     -->
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+    
+      <a class="nav-right" href="/2020/07/25/%E4%BB%8E1%E5%88%B0n%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%8F%8A%E5%9B%9E%E6%BA%AF%E7%B1%BB%E4%B9%8B%E5%85%A8%E6%8E%92%E5%88%97%E3%80%81%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81/">
+        
+          从1到n的二叉搜索树及回溯类之全排列、电话号码
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目I"><span class="toc-nav-text">题目I</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟"><span class="toc-nav-text">感悟</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目II"><span class="toc-nav-text">题目II</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解-1"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟-1"><span class="toc-nav-text">感悟</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目III"><span class="toc-nav-text">题目III</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解-2"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟-2"><span class="toc-nav-text">感悟</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2020/07/25/dp之最大子序和、爬楼梯及二分插入/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <!-- <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div> -->
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2020 | Content by <a href="https://github.com/ydl8023" target="_blank">Yindarling</a> | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a> |
+    Theme by <a href="https://github.com/yanm1ng" target="_blank" rel="noopener">yanm1ng</a>
+
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

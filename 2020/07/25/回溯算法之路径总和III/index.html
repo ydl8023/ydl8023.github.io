@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="ydl&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.jpg">
+  
+  <title>
+    
+      回溯算法之路径总和III | Blog of Yindarling
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!-- <div class="logo"></div> -->
+      <span>Blog of Yindarling</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>回溯算法之路径总和III</h2>
+  <p class="post-date">2020-07-25</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>今天就只做了一道题，发现自己似乎平时撸代码都很狂暴，不考虑时间空间，所以回溯算法的时候也从来不考虑恢复状态什么的，但是之后得慢慢改了！<br>今天遇见了一个讲算法讲得很好的gitbook，码一下<br><a href="https://labuladong.gitbook.io/algo/di-ling-zhang-bi-du-xi-lie/hui-su-suan-fa-xiang-jie-xiu-ding-ban" target="_blank" rel="noopener">link</a></p>
+<a id="more"></a>
+
+<h4 id="题目I"><a href="#题目I" class="headerlink" title="题目I"></a>题目I</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200714193617.png" width="70%" />
+
+<h4 id="题解I"><a href="#题解I" class="headerlink" title="题解I"></a>题解I</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pathSum</span><span class="params">(TreeNode* root, <span class="keyword">int</span> sum)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(root==<span class="literal">NULL</span>)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">int</span> result=<span class="number">0</span>;</span><br><span class="line">       <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">       traverse(root,temp,sum,result);</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">traverse</span><span class="params">(TreeNode* p,<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp,<span class="keyword">int</span> sum,<span class="keyword">int</span> &amp; result)</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(p!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;temp.size();i++)&#123;</span><br><span class="line">               temp[i]+=p-&gt;val;</span><br><span class="line">               <span class="keyword">if</span>(temp[i]==sum)&#123;</span><br><span class="line">                   result++;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span>(p-&gt;val==sum)&#123;</span><br><span class="line">               result++;</span><br><span class="line">           &#125;</span><br><span class="line">           temp.push_back(p-&gt;val);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span>(p-&gt;left!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">           traverse(p-&gt;left,temp,sum,result);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span>(p-&gt;right!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">           traverse(p-&gt;right,temp,sum,result);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="题解II"><a href="#题解II" class="headerlink" title="题解II"></a>题解II</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pathSum</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// key是前缀和, value是大小为key的前缀和出现的次数</span></span><br><span class="line">        Map&lt;Integer, Integer&gt; prefixSumCount = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="comment">// 前缀和为0的一条路径</span></span><br><span class="line">        prefixSumCount.put(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 前缀和的递归回溯思路</span></span><br><span class="line">        <span class="keyword">return</span> recursionPathSum(root, prefixSumCount, sum, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 前缀和的递归回溯思路</span></span><br><span class="line"><span class="comment">     * 从当前节点反推到根节点(反推比较好理解，正向其实也只有一条)，有且仅有一条路径，因为这是一棵树</span></span><br><span class="line"><span class="comment">     * 如果此前有和为currSum-target,而当前的和又为currSum,两者的差就肯定为target了</span></span><br><span class="line"><span class="comment">     * 所以前缀和对于当前路径来说是唯一的，当前记录的前缀和，在回溯结束，回到本层时去除，保证其不影响其他分支的结果</span></span><br><span class="line"><span class="comment">     * @param node 树节点</span></span><br><span class="line"><span class="comment">     * @param prefixSumCount 前缀和Map</span></span><br><span class="line"><span class="comment">     * @param target 目标值</span></span><br><span class="line"><span class="comment">     * @param currSum 当前路径和</span></span><br><span class="line"><span class="comment">     * @return 满足题意的解</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">recursionPathSum</span><span class="params">(TreeNode node, Map&lt;Integer, Integer&gt; prefixSumCount, <span class="keyword">int</span> target, <span class="keyword">int</span> currSum)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 1.递归终止条件</span></span><br><span class="line">        <span class="keyword">if</span> (node == null) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 2.本层要做的事情</span></span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 当前路径上的和</span></span><br><span class="line">        currSum += node.val;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//---核心代码</span></span><br><span class="line">        <span class="comment">// 看看root到当前节点这条路上是否存在节点前缀和加target为currSum的路径</span></span><br><span class="line">        <span class="comment">// 当前节点-&gt;root节点反推，有且仅有一条路径，如果此前有和为currSum-target,而当前的和又为currSum,两者的差就肯定为target了</span></span><br><span class="line">        <span class="comment">// currSum-target相当于找路径的起点，起点的sum+target=currSum，当前点到起点的距离就是target</span></span><br><span class="line">        res += prefixSumCount.getOrDefault(currSum - target, <span class="number">0</span>);</span><br><span class="line">        <span class="comment">// 更新路径上当前节点前缀和的个数</span></span><br><span class="line">        prefixSumCount.put(currSum, prefixSumCount.getOrDefault(currSum, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        <span class="comment">//---核心代码</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3.进入下一层</span></span><br><span class="line">        res += recursionPathSum(node.left, prefixSumCount, target, currSum);</span><br><span class="line">        res += recursionPathSum(node.right, prefixSumCount, target, currSum);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4.回到本层，恢复状态，去除当前节点的前缀和数量</span></span><br><span class="line">        <span class="comment">// 为什么要恢复状态呢？</span></span><br><span class="line">        <span class="comment">// 可能因为Java是引用传递而C++是值传递？</span></span><br><span class="line">        <span class="comment">// 对</span></span><br><span class="line">        prefixSumCount.put(currSum, prefixSumCount.get(currSum) - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h4><p>用我自己的方法的话，就是DFS的应用，但是时间空间耗费都比较大，采用前缀和的方式，会更加巧妙</p>
+</section>
+    <!-- Tags START -->
+    <!-- 
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#力扣" >
+    <span class="tag-code">力扣</span>
+  </a>
+
+      </div>
+     -->
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/07/25/%E4%BB%8E1%E5%88%B0n%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%8F%8A%E5%9B%9E%E6%BA%AF%E7%B1%BB%E4%B9%8B%E5%85%A8%E6%8E%92%E5%88%97%E3%80%81%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81/">
+        <span class="nav-arrow">← </span>
+        
+          从1到n的二叉搜索树及回溯类之全排列、电话号码
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/07/25/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88%E5%8F%8A%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98/">
+        
+          二叉搜索树公共祖先及所有路径问题
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目I"><span class="toc-nav-text">题目I</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解I"><span class="toc-nav-text">题解I</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解II"><span class="toc-nav-text">题解II</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟"><span class="toc-nav-text">感悟</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2020/07/25/回溯算法之路径总和III/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <!-- <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div> -->
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2020 | Content by <a href="https://github.com/ydl8023" target="_blank">Yindarling</a> | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a> |
+    Theme by <a href="https://github.com/yanm1ng" target="_blank" rel="noopener">yanm1ng</a>
+
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="ydl&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.jpg">
+  
+  <title>
+    
+      树的BFS、DFS遍历 | Blog of Yindarling
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!-- <div class="logo"></div> -->
+      <span>Blog of Yindarling</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>树的BFS、DFS遍历</h2>
+  <p class="post-date">2020-07-25</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>今天主要是树的遍历，深度遍历（递归），广度遍历（队列）</p>
+<a id="more"></a>
+
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200706193651.png"  width="60%"/>
+
+<h4 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//网上版本</span></span><br><span class="line"><span class="keyword">if</span> (root == null) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// bfs</span></span><br><span class="line">      Queue&lt;TreeNode&gt; <span class="built_in">queue</span> = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">      <span class="keyword">int</span> depth = <span class="number">0</span>;</span><br><span class="line">      <span class="built_in">queue</span>.add(root);</span><br><span class="line">      <span class="keyword">while</span> (!<span class="built_in">queue</span>.isEmpty()) &#123;</span><br><span class="line">          <span class="keyword">int</span> size = <span class="built_in">queue</span>.size();</span><br><span class="line">          depth++;</span><br><span class="line">          <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">              TreeNode temp = <span class="built_in">queue</span>.poll();<span class="comment">//删除第一个元素，先进先出</span></span><br><span class="line">              <span class="keyword">if</span> (temp.left != null) &#123;</span><br><span class="line">                  <span class="built_in">queue</span>.add(temp.left);</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span> (temp.right != null) &#123;</span><br><span class="line">                  <span class="built_in">queue</span>.add(temp.right);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> depth;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自己实现的版本</span></span><br><span class="line">		<span class="keyword">if</span>(root==<span class="literal">NULL</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">queue</span>&lt;TreeNode*&gt; q;</span><br><span class="line">            <span class="keyword">int</span> depth=<span class="number">0</span>;</span><br><span class="line">            q.push(root);</span><br><span class="line">            <span class="keyword">while</span>(!q.empty())&#123;</span><br><span class="line">                <span class="keyword">int</span> size=q.size();</span><br><span class="line">                depth++;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">                    TreeNode* temp=q.front();</span><br><span class="line">                    q.pop(); </span><br><span class="line">                    <span class="keyword">if</span>(temp-&gt;left!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">                        q.push(temp-&gt;left);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(temp-&gt;right!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">                        q.push(temp-&gt;right);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> depth;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h4><p>一般用队列来实现广度优先遍历（横着遍历root节点的每一层，然后递归下去），每遍历一层，深度+1</p>
+<h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200706211117.png" width="60%" />
+
+<h4 id="解法-1"><a href="#解法-1" class="headerlink" title="解法"></a>解法</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; result;</span><br><span class="line">      <span class="built_in">queue</span>&lt;TreeNode*&gt; myQueue;</span><br><span class="line">      <span class="keyword">if</span>(root==<span class="literal">NULL</span>)&#123;</span><br><span class="line">          <span class="keyword">return</span> result;</span><br><span class="line">      &#125;</span><br><span class="line">      myQueue.push(root);</span><br><span class="line">      <span class="keyword">while</span>(!myQueue.empty())&#123;</span><br><span class="line">          <span class="keyword">int</span> size=myQueue.size();</span><br><span class="line">          <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">          <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">              TreeNode* t=myQueue.front();</span><br><span class="line">              temp.push_back(t-&gt;val);</span><br><span class="line">              myQueue.pop();</span><br><span class="line">              <span class="keyword">if</span>(t-&gt;left!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">                  myQueue.push(t-&gt;left);</span><br><span class="line">              &#125;</span><br><span class="line">              <span class="keyword">if</span>(t-&gt;right!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">                  myQueue.push(t-&gt;right);</span><br><span class="line">              &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          result.push_back(temp);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; re;</span><br><span class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i=result.size()<span class="number">-1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">          re.push_back(result[i]);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> re;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟-1"><a href="#感悟-1" class="headerlink" title="感悟"></a>感悟</h4><p>广度优先遍历的应用。需要注意的是，cpp中队列使用queue，queue有push方法，而vecotr（stack的一种）则没有，只有push-back方法；此外，queue的front可以取出队首元素，而pop只是删除首元素，不返回该元素。</p>
+</section>
+    <!-- Tags START -->
+    <!-- 
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#力扣" >
+    <span class="tag-code">力扣</span>
+  </a>
+
+      </div>
+     -->
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/07/25/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E3%80%81%E5%B9%B3%E8%A1%A1%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8/">
+        <span class="nav-arrow">← </span>
+        
+          二叉搜索、平衡树的应用
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#题目"><span class="toc-nav-text">题目</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解法"><span class="toc-nav-text">解法</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟"><span class="toc-nav-text">感悟</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目-1"><span class="toc-nav-text">题目</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解法-1"><span class="toc-nav-text">解法</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟-1"><span class="toc-nav-text">感悟</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2020/07/25/树的BFS、DFS遍历/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <!-- <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div> -->
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2020 | Content by <a href="https://github.com/ydl8023" target="_blank">Yindarling</a> | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a> |
+    Theme by <a href="https://github.com/yanm1ng" target="_blank" rel="noopener">yanm1ng</a>
+
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

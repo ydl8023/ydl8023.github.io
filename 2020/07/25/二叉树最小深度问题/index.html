@@ -10,7 +10,7 @@
   
   <title>
     
-      Hello World | Blog of Yindarling
+      二叉树最小深度问题 | Blog of Yindarling
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -117,8 +117,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Hello World</h2>
-  <p class="post-date">2020-07-24</p>
+  <h2>二叉树最小深度问题</h2>
+  <p class="post-date">2020-07-25</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -126,31 +126,22 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+    <section class="markdown-content"><p>写的有点少，就是之前内容的应用</p>
+<a id="more"></a>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200708120327.png" width="60%" />
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h4 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">minDepth</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(root==<span class="literal">NULL</span>)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="built_in">queue</span>&lt;TreeNode*&gt; vec;</span><br><span class="line">       <span class="keyword">int</span> result=<span class="number">0</span>;</span><br><span class="line">       vec.push(root);</span><br><span class="line">       <span class="keyword">while</span>(!vec.empty())&#123;</span><br><span class="line">           <span class="keyword">int</span> size=vec.size();</span><br><span class="line">           result++;</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;size;i++)&#123;</span><br><span class="line">               TreeNode* p=vec.front();</span><br><span class="line">               vec.pop();</span><br><span class="line">               <span class="keyword">if</span>(p-&gt;left==<span class="literal">NULL</span> <span class="keyword">and</span> p-&gt;right==<span class="literal">NULL</span>)&#123;</span><br><span class="line">                   <span class="keyword">return</span> result;</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">if</span>(p-&gt;left!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">                   vec.push(p-&gt;left);</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">if</span>(p-&gt;right!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">                   vec.push(p-&gt;right);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<h4 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h4><p>开始没有头脑，感觉和求高度差不多；那么就往树的遍历上套，采用BFS，在层间遍历遇到叶节点（左右子树都为NULL）时返回结果即可</p>
 </section>
     <!-- Tags START -->
     <!-- 
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#Movies" >
-    <span class="tag-code">Movies</span>
-  </a>
-
-  <a href="/tags#Life" >
-    <span class="tag-code">Life</span>
+  <a href="/tags#力扣" >
+    <span class="tag-code">力扣</span>
   </a>
 
       </div>
@@ -158,6 +149,26 @@
     <!-- Tags END -->
     <!-- NAV START -->
     
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/07/25/DFS%E5%BA%94%E7%94%A8%E4%B9%8B%E8%B7%AF%E5%BE%84%E4%B9%8B%E5%92%8C%E3%80%81%E4%BA%8C%E5%8F%89%E6%A0%91%E7%BF%BB%E8%BD%AC/">
+        <span class="nav-arrow">← </span>
+        
+          DFS应用之路径之和、二叉树翻转
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2020/07/25/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E3%80%81%E5%B9%B3%E8%A1%A1%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8/">
+        
+          二叉搜索、平衡树的应用
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
     <!-- NAV END -->
     <!-- 打赏 START -->
     
@@ -176,7 +187,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Quick-Start"><span class="toc-nav-text">Quick Start</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Create-a-new-post"><span class="toc-nav-text">Create a new post</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Run-server"><span class="toc-nav-text">Run server</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Generate-static-files"><span class="toc-nav-text">Generate static files</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Deploy-to-remote-sites"><span class="toc-nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题目"><span class="toc-nav-text">题目</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟"><span class="toc-nav-text">感悟</span></a></li></ol>
     
   </div>
 </aside>
@@ -186,7 +197,7 @@
 
 <script>
   (function () {
-    var url = 'http://yoursite.com/2020/07/24/hello-world/';
+    var url = 'http://yoursite.com/2020/07/25/二叉树最小深度问题/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
