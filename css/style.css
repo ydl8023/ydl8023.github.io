@@ -501,24 +501,35 @@ h2.article-head {
   overflow-x: hidden;
 }
 .markdown-content pre,
-.article-summary pre,
+.article-summary pre {
+  font-family: 'Roboto Mono', Monaco, courier, monospace;
+  font-size: 13px;
+}
+@media screen and (max-width: 480px) {
+  .markdown-content pre,
+  .article-summary pre {
+    font-size: 12px;
+  }
+}
+.markdown-content pre .line,
+.article-summary pre .line {
+  min-height: 13px;
+  margin: 2px 0;
+}
 .markdown-content code,
 .article-summary code {
   font-family: 'Roboto Mono', Monaco, courier, monospace;
   font-size: 13px;
 }
 @media screen and (max-width: 480px) {
-  .markdown-content pre,
-  .article-summary pre,
   .markdown-content code,
   .article-summary code {
     font-size: 12px;
   }
 }
-.markdown-content pre .line,
-.article-summary pre .line,
 .markdown-content code .line,
 .article-summary code .line {
+  line-height: 30px;
   min-height: 13px;
   margin: 2px 0;
 }
