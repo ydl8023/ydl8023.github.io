@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="ydl&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.jpg">
+  
+  <title>
+    
+      📖leetcode#9｜贪心中的轮子与Set | Blog of Yindarling
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+  
+
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <!-- <div class="logo"></div> -->
+      <span>Blog of Yindarling</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>📖leetcode#9｜贪心中的轮子与Set</h2>
+  <p class="post-date">2020-08-30</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>今天仍旧是贪心算法类题目，感觉就是要分析好实际情况，上手不难</p>
+<a id="more"></a>
+
+<h3 id="题目I"><a href="#题目I" class="headerlink" title="题目I"></a>题目I</h3><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200830113623.png" width="60%" />
+
+<h4 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">reverseWords</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    String[] t;</span><br><span class="line">    t=s.split(<span class="string">" "</span>);</span><br><span class="line">    String result=<span class="string">""</span>;</span><br><span class="line">    <span class="keyword">for</span> (String temp:</span><br><span class="line">    t     ) &#123;</span><br><span class="line">      StringBuilder sb=<span class="keyword">new</span> StringBuilder(temp);</span><br><span class="line">      String tem=sb.reverse().toString();</span><br><span class="line">      result+=tem+<span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    result=result.substring(<span class="number">0</span>,result.length()-<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h4><p>就是单纯的使用轮子，先把字符串分堆，再对每一个堆里的字符串逆序处理，最后再连接就可以了</p>
+<h3 id="题目II"><a href="#题目II" class="headerlink" title="题目II"></a>题目II</h3><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200830113848.png" width="60%" />
+
+<h4 id="题解-1"><a href="#题解-1" class="headerlink" title="题解"></a>题解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">robotSim</span><span class="params">(<span class="keyword">int</span>[] commands, <span class="keyword">int</span>[][] obstacles)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[] robot=&#123;<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> result=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">char</span> c=<span class="string">'N'</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> t:</span><br><span class="line">         commands) &#123;</span><br><span class="line">        <span class="keyword">if</span>(t==-<span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(c==<span class="string">'N'</span>)&#123;</span><br><span class="line">                c=<span class="string">'W'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">'W'</span>)&#123;</span><br><span class="line">                c=<span class="string">'S'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">'S'</span>)&#123;</span><br><span class="line">                c=<span class="string">'E'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                c=<span class="string">'N'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(t==-<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(c==<span class="string">'N'</span>)&#123;</span><br><span class="line">                c=<span class="string">'E'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">'E'</span>)&#123;</span><br><span class="line">                c=<span class="string">'S'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">'S'</span>)&#123;</span><br><span class="line">                c=<span class="string">'W'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                c=<span class="string">'N'</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;t;i++)&#123;</span><br><span class="line">                <span class="keyword">if</span>(c==<span class="string">'N'</span>)&#123;</span><br><span class="line">                    robot[<span class="number">1</span>]+=<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">if</span>(isCollision(obstacles,robot))&#123;</span><br><span class="line">                        robot[<span class="number">1</span>]-=<span class="number">1</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(result&lt;(<span class="keyword">int</span>) (Math.pow(robot[<span class="number">0</span>],<span class="number">2</span>)+Math.pow(robot[<span class="number">1</span>],<span class="number">2</span>)))&#123;</span><br><span class="line">                        result=(<span class="keyword">int</span>) (Math.pow(robot[<span class="number">0</span>],<span class="number">2</span>)+Math.pow(robot[<span class="number">1</span>],<span class="number">2</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">'S'</span>)&#123;</span><br><span class="line">                    robot[<span class="number">1</span>]-=<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">if</span>(isCollision(obstacles,robot))&#123;</span><br><span class="line">                        robot[<span class="number">1</span>]+=<span class="number">1</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(result&lt;(<span class="keyword">int</span>) (Math.pow(robot[<span class="number">0</span>],<span class="number">2</span>)+Math.pow(robot[<span class="number">1</span>],<span class="number">2</span>)))&#123;</span><br><span class="line">                        result=(<span class="keyword">int</span>) (Math.pow(robot[<span class="number">0</span>],<span class="number">2</span>)+Math.pow(robot[<span class="number">1</span>],<span class="number">2</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">'E'</span>)&#123;</span><br><span class="line">                    robot[<span class="number">0</span>]+=<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">if</span>(isCollision(obstacles,robot))&#123;</span><br><span class="line">                        robot[<span class="number">0</span>]-=<span class="number">1</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(result&lt;(<span class="keyword">int</span>) (Math.pow(robot[<span class="number">0</span>],<span class="number">2</span>)+Math.pow(robot[<span class="number">1</span>],<span class="number">2</span>)))&#123;</span><br><span class="line">                        result=(<span class="keyword">int</span>) (Math.pow(robot[<span class="number">0</span>],<span class="number">2</span>)+Math.pow(robot[<span class="number">1</span>],<span class="number">2</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;</span><br><span class="line">                    robot[<span class="number">0</span>]-=<span class="number">1</span>;</span><br><span class="line">                    <span class="keyword">if</span>(isCollision(obstacles,robot))&#123;</span><br><span class="line">                        robot[<span class="number">0</span>]+=<span class="number">1</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(result&lt;(<span class="keyword">int</span>) (Math.pow(robot[<span class="number">0</span>],<span class="number">2</span>)+Math.pow(robot[<span class="number">1</span>],<span class="number">2</span>)))&#123;</span><br><span class="line">                        result=(<span class="keyword">int</span>) (Math.pow(robot[<span class="number">0</span>],<span class="number">2</span>)+Math.pow(robot[<span class="number">1</span>],<span class="number">2</span>));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span>  <span class="keyword">boolean</span> <span class="title">isCollision</span><span class="params">(<span class="keyword">int</span>[][] obstacles,<span class="keyword">int</span>[] position)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;obstacles.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(obstacles[i][<span class="number">0</span>]==position[<span class="number">0</span>] &amp;&amp; obstacles[i][<span class="number">1</span>]==position[<span class="number">1</span>])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟-1"><a href="#感悟-1" class="headerlink" title="感悟"></a>感悟</h4><p>就是一步一步的模拟处理，什么时候转向，什么时候向前走，怎么判断是否冲突，并不难。需要注意的是，题目中的结果是每一步距离的最大值，而不是终点的距离，此外，如何判断是否冲突是有讲究的，可以利用set来降低复杂度。</p>
+<blockquote>
+<img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200830114137.png" width="60%" />
+
+<img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200830114306.png" width="40%" />
+</blockquote>
+<h3 id="题目III"><a href="#题目III" class="headerlink" title="题目III"></a>题目III</h3><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200830114405.png" width="60%" />
+
+<h4 id="题解-2"><a href="#题解-2" class="headerlink" title="题解"></a>题解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minDeletionSize</span><span class="params">(String[] A)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;A[<span class="number">0</span>].length();i++)&#123;</span><br><span class="line">        String t=<span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;A.length;j++)&#123;</span><br><span class="line">            t+=String.valueOf(A[j].charAt(i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">char</span>[] arr=t.toCharArray();</span><br><span class="line">        Arrays.sort(arr);</span><br><span class="line">        String sortedStr=<span class="keyword">new</span> String(arr);</span><br><span class="line">        <span class="keyword">if</span>(!sortedStr.equals(t))&#123;</span><br><span class="line">            result++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="感悟-2"><a href="#感悟-2" class="headerlink" title="感悟"></a>感悟</h4><p>乍一看还挺难，但仔细分析之后，发现只需要知道不符合条件的列就可以了，并且列与列之间没有关系，利用轮子很快就能解决，就是复杂度很高。。</p>
+</section>
+    <!-- Tags START -->
+    <!-- 
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#力扣" >
+    <span class="tag-code">力扣</span>
+  </a>
+
+      </div>
+     -->
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2020/08/30/Java%E5%B8%B8%E7%94%A8%E5%8A%9E%E6%B3%95/">
+        <span class="nav-arrow">← </span>
+        
+          Java常用办法
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#题目I"><span class="toc-nav-text">题目I</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟"><span class="toc-nav-text">感悟</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#题目II"><span class="toc-nav-text">题目II</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解-1"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟-1"><span class="toc-nav-text">感悟</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#题目III"><span class="toc-nav-text">题目III</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#题解-2"><span class="toc-nav-text">题解</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#感悟-2"><span class="toc-nav-text">感悟</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://yoursite.com/2020/08/30/leetcode-10/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+
+
+
+
+
+    <!-- <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div> -->
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2020 | Content by <a href="https://github.com/ydl8023" target="_blank">Yindarling</a> | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a> |
+    Theme by <a href="https://github.com/yanm1ng" target="_blank" rel="noopener">yanm1ng</a>
+
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>
