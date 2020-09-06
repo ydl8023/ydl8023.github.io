@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2020/09/06/python%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/</loc>
+    <lastmod>2020-09-06</lastmod>
+  </url>
+  <url>
     <loc>http://yoursite.com/2020/09/02/leetcode-12/</loc>
     <lastmod>2020-09-04</lastmod>
   </url>
