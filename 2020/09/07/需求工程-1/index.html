@@ -10,7 +10,7 @@
   
   <title>
     
-      python数据处理👬#0 | Blog of Yindarling
+      需求工程#1 | Blog of Yindarling
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -117,8 +117,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>python数据处理👬#0</h2>
-  <p class="post-date">2020-09-06</p>
+  <h2>需求工程#1</h2>
+  <p class="post-date">2020-09-07</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -126,27 +126,46 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><h3 id="本地数据处理"><a href="#本地数据处理" class="headerlink" title="本地数据处理"></a>本地数据处理</h3><p>打开本地文件<code>with open(&#39;/Users/yindelin/Desktop/test.txt&#39;) as f:</code>，这样写就不用自己写close来关闭文件</p>
-<p>其中open方法的第二个字符串参数代表mode，例如r读文件（文件必须存在）、w清空来写文件/新建一个文件、a追加；默认是r</p>
-<img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200906145034.png" width="20%" />
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">f.read() //读取整个文件，没有换行符</span><br><span class="line">f.read(size) //读取size个字节的数据，如果是字符串的话，就是参数个字符</span><br><span class="line">f.readline() //读取一行数据，没有换行符</span><br><span class="line">f.readlines() //读取整个文本，返回一个列表，每一行是一个列表项，含有换行符</span><br><span class="line">f.write(<span class="string">'hello,nju!\n'</span>) //只有w、a模式下才能write，换行符被翻译成了换行</span><br><span class="line">f.writelines(mylist) //把一个列表中每一项合并成一行写进文本中</span><br></pre></td></tr></table></figure>
-
-<p>在读写的时候有一个文件指针，例如调用writelines来写入文件的时候，文件指针已经到达文件末尾，这时候再读取的话，什么都读不出来，为了移动文件指针，可以调用<code>file_obj.seek(offset,start=0)</code>，表示将文件指针移到<code>start+offset</code>字节的位置</p>
+    <section class="markdown-content"><h3 id="导论"><a href="#导论" class="headerlink" title="导论"></a>导论</h3><h4 id="问题域"><a href="#问题域" class="headerlink" title="问题域"></a>问题域</h4><p>当现实的状况与人们期望的状况产生差距时，就产生了问题。<br>要解决问题，就需要改变现实当中某些实体的状态或改变实体状态变化的演进顺序，使其达到期望的状态或演进顺序。<br>这些实体和状态构成了问题解决的基本范围，称为该问题的问题域</p>
+<h4 id="解系统"><a href="#解系统" class="headerlink" title="解系统"></a>解系统</h4><p>软件系统通过影响问题域，能够帮助人们解决问题，称为解系统</p>
 <blockquote>
-<p>../表示上层目录</p>
-<p>./表示当前目录</p>
+<p>问题域是自治的，它有自己的运行规律，而且这些规律不会因解系统的引入而发生改变</p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">path=<span class="string">'./testdata'</span></span><br><span class="line"><span class="keyword">for</span> fname <span class="keyword">in</span> os.listdir(path):  //fname是路径下的文件</span><br><span class="line">  <span class="keyword">if</span> fname.endwith(<span class="string">'.text'</span>):    //判断文件的格式</span><br><span class="line">    file_path=os.path.join(path,fname)   //拼接成完整路径</span><br><span class="line">    countLines(file_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> os.path.exists(path):</span><br><span class="line">  shutil.rmtree(path)  //删除目录</span><br><span class="line">os.mkdir(path)  //创建目录</span><br></pre></td></tr></table></figure>
+<h4 id="软件解决问题的基础：模拟与共享"><a href="#软件解决问题的基础：模拟与共享" class="headerlink" title="软件解决问题的基础：模拟与共享"></a>软件解决问题的基础：模拟与共享</h4><p>软件系统能够与问题域进行交互和相互影响的原因在于，软件系统中的某些部分对问题域中的某些部分的具有模拟特性</p>
+<p>问题域中的某些信息能够和模型中的信息建立映射关系，这些通过映射建立的共同知识，就是问题域和解系统之间的共享现象</p>
+<blockquote>
+<p>需求的四个基本概念：问题域、需求、解系统、需求规格说明</p>
+</blockquote>
+<img src="" />
 
-<h3 id="网络数据爬取"><a href="#网络数据爬取" class="headerlink" title="网络数据爬取"></a>网络数据爬取</h3></section>
+<h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><p>（1）用户为了解决问题或达到某些目标所需要的条件或能力；<br>（2）系统或系统部件为了满足合同、标准、规范或其它正式文档所规定的要求而需要具备的条件或能力；<br>（3）对（1）或（2）中的一个条件或一种能力的一种文档化表述。</p>
+<p>需求是沟通客观世界与计算机世界的唯一渠道</p>
+<h4 id="需求工程"><a href="#需求工程" class="headerlink" title="需求工程"></a>需求工程</h4><p>是软件工程的一个分支</p>
+<ol>
+<li>它关注于软件系统所应予实现的现实世界目标、软件系统的功能和软件系统应当遵守的约束</li>
+<li>同时它也关注以上因素和准确的软件行为规格说明之间的联系</li>
+<li>关注以上因素与其随时间或跨产品族而演化之后的相关因素之间的联系</li>
+</ol>
+<p>学生容易忽略需求工程重要性（求解的问题明确，项目规模小，非真实世界应用），因为开发软件系统最困难的部分就是准确说明开发什么</p>
+<h4 id="需求工程的基本活动与实质"><a href="#需求工程的基本活动与实质" class="headerlink" title="需求工程的基本活动与实质"></a>需求工程的基本活动与实质</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200907194430.png" width="50%" />
+
+<h4 id="商业模式"><a href="#商业模式" class="headerlink" title="商业模式"></a>商业模式</h4><p>一个商业模式描述的是一个组织创造、传递以及获得价值的基本原理，其本质在于价值的流动</p>
+<p>围绕商业模式的基本活动：</p>
+<ul>
+<li>画布：基本模型与工具</li>
+<li>类型：利用画布分析常见的商业模式</li>
+<li>设计：商业模式的构建手段</li>
+<li>战略：商业模式的环境、评估、规划、管理</li>
+<li>流程：完整的商业模式设计流程</li>
+</ul>
+<h4 id="商业模式画布概览"><a href="#商业模式画布概览" class="headerlink" title="商业模式画布概览"></a>商业模式画布概览</h4><img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200907195209.png" width="60%" /></section>
     <!-- Tags START -->
     <!-- 
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#数据处理" >
-    <span class="tag-code">数据处理</span>
+  <a href="/tags#需求工程" >
+    <span class="tag-code">需求工程</span>
   </a>
 
       </div>
@@ -157,20 +176,13 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2020/09/02/leetcode-12/">
+      <a class="nav-left" href="/2020/09/06/python%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">
         <span class="nav-arrow">← </span>
         
-          📖leetcode#10｜滑动窗口1
+          python数据处理👬#0
         
       </a>
     
-    
-      <a class="nav-right" href="/2020/09/07/%E9%9C%80%E6%B1%82%E5%B7%A5%E7%A8%8B-1/">
-        
-          需求工程#1
-        
-        <span class="nav-arrow"> →</span>
-      </a>
     
   </div>
 
@@ -192,7 +204,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#本地数据处理"><span class="toc-nav-text">本地数据处理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#网络数据爬取"><span class="toc-nav-text">网络数据爬取</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#导论"><span class="toc-nav-text">导论</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#问题域"><span class="toc-nav-text">问题域</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#解系统"><span class="toc-nav-text">解系统</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#软件解决问题的基础：模拟与共享"><span class="toc-nav-text">软件解决问题的基础：模拟与共享</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#需求"><span class="toc-nav-text">需求</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#需求工程"><span class="toc-nav-text">需求工程</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#需求工程的基本活动与实质"><span class="toc-nav-text">需求工程的基本活动与实质</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#商业模式"><span class="toc-nav-text">商业模式</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#商业模式画布概览"><span class="toc-nav-text">商业模式画布概览</span></a></li></ol></li></ol>
     
   </div>
 </aside>
@@ -202,7 +214,7 @@
 
 <script>
   (function () {
-    var url = 'http://yoursite.com/2020/09/06/python数据处理/';
+    var url = 'http://yoursite.com/2020/09/07/需求工程-1/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
