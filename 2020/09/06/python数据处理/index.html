@@ -126,7 +126,10 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><h3 id="本地数据处理"><a href="#本地数据处理" class="headerlink" title="本地数据处理"></a>本地数据处理</h3><p>打开本地文件<code>with open(&#39;/Users/yindelin/Desktop/test.txt&#39;) as f:</code>，这样写就不用自己写close来关闭文件</p>
+    <section class="markdown-content"><p>本地文件处理</p>
+<a id="more"></a>
+
+<h3 id="本地数据处理"><a href="#本地数据处理" class="headerlink" title="本地数据处理"></a>本地数据处理</h3><p>打开本地文件<code>with open(&#39;/Users/yindelin/Desktop/test.txt&#39;) as f:</code>，这样写就不用自己写close来关闭文件</p>
 <p>其中open方法的第二个字符串参数代表mode，例如r读文件（文件必须存在）、w清空来写文件/新建一个文件、a追加；默认是r</p>
 <img src="https://ydl8023.oss-cn-beijing.aliyuncs.com/20200906145034.png" width="20%" />
 
@@ -139,7 +142,9 @@
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">path=<span class="string">'./testdata'</span></span><br><span class="line"><span class="keyword">for</span> fname <span class="keyword">in</span> os.listdir(path):  //fname是路径下的文件</span><br><span class="line">  <span class="keyword">if</span> fname.endwith(<span class="string">'.text'</span>):    //判断文件的格式</span><br><span class="line">    file_path=os.path.join(path,fname)   //拼接成完整路径</span><br><span class="line">    countLines(file_path)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> os.path.exists(path):</span><br><span class="line">  shutil.rmtree(path)  //删除目录</span><br><span class="line">os.mkdir(path)  //创建目录</span><br></pre></td></tr></table></figure>
 
-<h3 id="网络数据爬取"><a href="#网络数据爬取" class="headerlink" title="网络数据爬取"></a>网络数据爬取</h3></section>
+
+
+</section>
     <!-- Tags START -->
     <!-- 
       <div class="tags">
@@ -192,7 +197,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#本地数据处理"><span class="toc-nav-text">本地数据处理</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#网络数据爬取"><span class="toc-nav-text">网络数据爬取</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#本地数据处理"><span class="toc-nav-text">本地数据处理</span></a></li></ol>
     
   </div>
 </aside>
