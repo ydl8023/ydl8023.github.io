@@ -150,7 +150,14 @@
 </blockquote>
 <blockquote>
 <p>二维数组声明，数组长度可以是变量，而C++中必须是值</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[][] a=<span class="keyword">new</span> <span class="keyword">int</span>[nums.length][nums.length];</span><br></pre></td></tr></table></figure></blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[][] a=<span class="keyword">new</span> <span class="keyword">int</span>[nums.length][nums.length];</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="字符串子串截取"><a href="#字符串子串截取" class="headerlink" title="字符串子串截取"></a>字符串子串截取</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String str=<span class="string">"hello world!"</span>;</span><br><span class="line">str.substring(<span class="number">1</span>,<span class="number">3</span>);  <span class="comment">//el</span></span><br><span class="line">str.substring(<span class="number">3</span>);   <span class="comment">//lo world!</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>java中传递参数为数组时，传递的是引用，对调用函数里的数组的更改也会影响原调用函数里的数组</p>
+<p>假设<code>List&lt;List&lt;Integer&gt;&gt; a</code>里面添加了一个<code>List&lt;Integer&gt; b</code>，那么a里面持有的是b的引用，而不是拷贝，所以当b的元素发生改变时，a中的元素也会改变</p>
+</blockquote>
 </section>
     <!-- Tags START -->
     <!-- 
@@ -204,7 +211,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#分割字符串"><span class="toc-nav-text">分割字符串</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串逆序拼接"><span class="toc-nav-text">字符串逆序拼接</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串去除最后一个字符"><span class="toc-nav-text">字符串去除最后一个字符</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串转字符"><span class="toc-nav-text">字符串转字符</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串非降序排序"><span class="toc-nav-text">字符串非降序排序</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#分割字符串"><span class="toc-nav-text">分割字符串</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串逆序拼接"><span class="toc-nav-text">字符串逆序拼接</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串去除最后一个字符"><span class="toc-nav-text">字符串去除最后一个字符</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串转字符"><span class="toc-nav-text">字符串转字符</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串非降序排序"><span class="toc-nav-text">字符串非降序排序</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#字符串子串截取"><span class="toc-nav-text">字符串子串截取</span></a></li></ol>
     
   </div>
 </aside>

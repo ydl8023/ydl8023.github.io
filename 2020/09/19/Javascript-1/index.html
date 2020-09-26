@@ -126,7 +126,7 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>廖雪峰第一天✌️</p>
+    <section class="markdown-content"><p>廖雪峰快速入门</p>
 <a id="more"></a>
 
 <h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><h4 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">123</span>; <span class="comment">// 整数123</span></span><br><span class="line"><span class="number">0.456</span>; <span class="comment">// 浮点数0.456</span></span><br><span class="line"><span class="number">1.2345e3</span>; <span class="comment">// 科学计数法表示1.2345x1000，等同于1234.5</span></span><br><span class="line"><span class="number">-99</span>; <span class="comment">// 负数</span></span><br><span class="line"><span class="literal">NaN</span>; <span class="comment">// NaN表示Not a Number，当无法计算结果时用NaN表示</span></span><br><span class="line"><span class="literal">Infinity</span>; <span class="comment">// Infinity表示无限大，当数值超过了JavaScript的Number所能表示的最大值时，就表示为Infinity</span></span><br></pre></td></tr></table></figure>
@@ -159,8 +159,12 @@
 <h4 id="布尔值"><a href="#布尔值" class="headerlink" title="布尔值"></a>布尔值</h4><p>true和false</p>
 <h4 id="null和undefined"><a href="#null和undefined" class="headerlink" title="null和undefined"></a>null和undefined</h4><p><code>null</code>表示一个“空”的值，它和<code>0</code>以及空字符串<code>&#39;&#39;</code>不同，<code>0</code>是一个数值，<code>&#39;&#39;</code>表示长度为0的字符串，而<code>null</code>表示“空”。<code>undefined</code>则表示“未定义”。</p>
 <p>大多数情况下，我们都应该用<code>null</code>。<code>undefined</code>仅仅在判断函数参数是否传递的情况下有用。</p>
-<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3.14</span>, <span class="string">'Hello'</span>, <span class="literal">null</span>, <span class="literal">true</span>]; <span class="comment">//数组内容的数据类型可以不同</span></span><br><span class="line">arr[<span class="number">0</span>]; <span class="comment">// 返回索引为0的元素，即1</span></span><br><span class="line">arr[<span class="number">5</span>]; <span class="comment">// 返回索引为5的元素，即true</span></span><br><span class="line">arr[<span class="number">6</span>]; <span class="comment">// 索引超出了范围，返回undefined</span></span><br></pre></td></tr></table></figure>
+<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3.14</span>, <span class="string">'Hello'</span>, <span class="literal">null</span>, <span class="literal">true</span>]; <span class="comment">//数组内容的数据类型可以不同</span></span><br><span class="line">arr[<span class="number">0</span>]; <span class="comment">// 返回索引为0的元素，即1</span></span><br><span class="line">arr[<span class="number">5</span>]; <span class="comment">// 返回索引为5的元素，即true</span></span><br><span class="line">arr[<span class="number">6</span>]; <span class="comment">// 索引超出了范围，返回undefined</span></span><br><span class="line">arr.length;  <span class="comment">//6</span></span><br></pre></td></tr></table></figure>
 
+<p>js中数组的长度是可变的，如下所示</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">arr.length; <span class="comment">// 3</span></span><br><span class="line">arr.length = <span class="number">6</span>;</span><br><span class="line">arr; <span class="comment">// arr变为[1, 2, 3, undefined, undefined, undefined]</span></span><br><span class="line">arr.length = <span class="number">2</span>;</span><br><span class="line">arr; <span class="comment">// arr变为[1, 2]</span></span><br></pre></td></tr></table></figure>
+
+<p>对于js</p>
 <h4 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h4><p>JavaScript的对象是一组由键-值组成的无序集合，例如：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">'Bob'</span>,</span><br><span class="line">    age: <span class="number">20</span>,</span><br><span class="line">    tags: [<span class="string">'js'</span>, <span class="string">'web'</span>, <span class="string">'mobile'</span>],</span><br><span class="line">    city: <span class="string">'Beijing'</span>,</span><br><span class="line">    hasCar: <span class="literal">true</span>,</span><br><span class="line">    zipcode: <span class="literal">null</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -194,13 +198,20 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2020/09/07/%E9%9C%80%E6%B1%82%E5%B7%A5%E7%A8%8B-1/">
+      <a class="nav-left" href="/2020/09/06/python%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/">
         <span class="nav-arrow">← </span>
         
-          需求工程#1
+          python数据处理👬#0
         
       </a>
     
+    
+      <a class="nav-right" href="/2020/09/26/leetcode-13/">
+        
+          📖leetcode#12｜回溯之路经总和II
+        
+        <span class="nav-arrow"> →</span>
+      </a>
     
   </div>
 
